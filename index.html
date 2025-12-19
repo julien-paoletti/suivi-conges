@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de Congés</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button id="helpBtn" class="help-btn" title="Aide et instructions">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 7H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M9 11H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <h1>Suivi de Congés</h1>
+            <button id="themeToggle" class="theme-toggle" title="Basculer entre thème clair et sombre">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="4" fill="currentColor"/>
+                    <path d="M10 1V3M10 17V19M19 10H17M3 10H1M16.364 3.636L14.95 5.05M5.05 14.95L3.636 16.364M16.364 16.364L14.95 14.95M5.05 5.05L3.636 3.636" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 10.5C16 14.5 12 17 8 17C4 17 1 14 1 10C1 6 3.5 2 7.5 1C6.5 2.5 6 4.5 6 6.5C6 11 9 14 13.5 14C14.5 14 15.5 13.5 17 13V10.5Z" fill="currentColor"/>
+                </svg>
+            </button>
+            <div class="header-controls">
+                <div class="year-selector">
+                    <button id="prevYear" class="year-btn">&lt;</button>
+                    <span id="currentYear" class="year-display"></span>
+                    <button id="nextYear" class="year-btn">&gt;</button>
+                </div>
+                <div class="zone-selector">
+                    <label for="zoneSelect" class="zone-label">Vacances scolaires :</label>
+                    <select id="zoneSelect" class="zone-select">
+                        <option value="">Aucune zone</option>
+                        <option value="A">Zone A</option>
+                        <option value="B">Zone B</option>
+                        <option value="C">Zone C</option>
+                    </select>
+                    <div class="help-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="9" stroke="#667eea" stroke-width="2"/>
+                            <path d="M10 14V14.01M10 11C10 11 10 10.5 10.5 10C11 9.5 12 9 12 8C12 6.89543 11.1046 6 10 6C8.89543 6 8 6.89543 8 8" stroke="#667eea" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <div class="help-tooltip">
+                            <div class="tooltip-header">Quelle zone choisir ?</div>
+                            <div class="tooltip-zone">
+                                <strong>Zone A</strong>
+                                <span>Besançon, Bordeaux, Clermont-Ferrand, Dijon, Grenoble, Limoges, Lyon, Poitiers</span>
+                            </div>
+                            <div class="tooltip-zone">
+                                <strong>Zone B</strong>
+                                <span>Aix-Marseille, Amiens, Caen, Lille, Nancy-Metz, Nantes, Nice, Orléans-Tours, Reims, Rennes, Rouen, Strasbourg</span>
+                            </div>
+                            <div class="tooltip-zone">
+                                <strong>Zone C</strong>
+                                <span>Créteil, Montpellier, Paris, Toulouse, Versailles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="counters">
+            <div class="counter counter-conges">
+                <div class="counter-label">Congés Annuels</div>
+                <div class="counter-value" id="congesCount">0</div>
+                <div class="counter-unit">jours</div>
+            </div>
+            <div class="counter counter-rtt">
+                <div class="counter-label">RTT</div>
+                <div class="counter-value" id="rttCount">0</div>
+                <div class="counter-unit">jours</div>
+            </div>
+            <div class="counter counter-autres">
+                <div class="counter-label">Autres</div>
+                <div class="counter-value" id="autresCount">0</div>
+                <div class="counter-unit">jours</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #4CAF50;"></span>
+                <span>Congés Annuels</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #2196F3;"></span>
+                <span>RTT</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #FF9800;"></span>
+                <span>Autres</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #f44336;"></span>
+                <span>Jour férié</span>
+            </div>
+            <div class="legend-item" id="vacancesLegend" style="display: none;">
+                <span class="legend-color" style="background-color: #9C27B0;"></span>
+                <span>Vacances scolaires</span>
+            </div>
+        </div>
+
+        <div id="calendarsContainer" class="calendars-grid"></div>
+
+        <div class="export-buttons-bottom">
+            <button id="exportBtn" class="action-btn export-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 12L8 3M8 3L5 6M8 3L11 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L2 13C2 13.5523 2.44772 14 3 14L13 14C13.5523 14 14 13.5523 14 13L14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Exporter JSON
+            </button>
+            <button id="importBtn" class="action-btn import-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 3L8 12M8 12L5 9M8 12L11 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L2 13C2 13.5523 2.44772 14 3 14L13 14C13.5523 14 14 13.5523 14 13L14 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Importer JSON
+            </button>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+        </div>
+
+        <footer class="footer">
+            Développé avec ❤️ à Bordeaux
+        </footer>
+    </div>
+
+    <!-- Modale d'aide -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Comment utiliser l'application ?</h2>
+
+            <div class="help-section">
+                <h3>📅 Sélectionner des jours de congés</h3>
+                <ul>
+                    <li><strong>Clic simple</strong> : Cliquez sur un jour pour le marquer comme congé</li>
+                    <li><strong>Cycle de couleurs</strong> : Chaque clic change le type de congé
+                        <ul>
+                            <li>1er clic : Congés Annuels (vert)</li>
+                            <li>2e clic : RTT (bleu)</li>
+                            <li>3e clic : Autres (orange)</li>
+                            <li>4e clic : Retour à l'état normal</li>
+                        </ul>
+                    </li>
+                    <li><strong>Glisser-déposer</strong> : Maintenez le bouton de la souris enfoncé et glissez sur plusieurs jours pour les sélectionner rapidement</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>🗑️ Réinitialiser</h3>
+                <ul>
+                    <li><strong>Par mois</strong> : Cliquez sur le bouton ✕ en haut à droite de chaque mois</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>🏫 Vacances scolaires</h3>
+                <ul>
+                    <li>Sélectionnez votre zone (A, B ou C) pour afficher les vacances scolaires</li>
+                    <li>Les jours de vacances apparaissent avec un contour violet</li>
+                    <li>Utilisez l'icône ? pour savoir quelle zone choisir</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>💾 Sauvegarder et exporter</h3>
+                <ul>
+                    <li><strong>Sauvegarde automatique</strong> : Vos congés sont automatiquement enregistrés dans votre navigateur</li>
+                    <li><strong>Exporter</strong> : Cliquez sur "Exporter JSON" pour télécharger une copie de vos données</li>
+                    <li><strong>Importer</strong> : Cliquez sur "Importer JSON" pour restaurer des données précédemment exportées</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>🌓 Thème</h3>
+                <ul>
+                    <li>Cliquez sur l'icône ☀️/🌙 en haut à droite pour basculer entre thème clair et sombre</li>
+                </ul>
+            </div>
+
+            <div class="help-section">
+                <h3>ℹ️ Informations utiles</h3>
+                <ul>
+                    <li>Les <span class="help-badge" style="background: #f44336;">jours fériés</span> sont affichés en rouge et non modifiables</li>
+                    <li>Les <span class="help-badge" style="background: #f0f0f0; color: #999;">weekends</span> apparaissent en gris</li>
+                    <li>Le <span class="help-badge" style="border: 2px solid #667eea;">jour actuel</span> est entouré en bleu</li>
+                    <li>Les numéros de semaine (S) sont affichés à gauche selon la norme ISO 8601</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
