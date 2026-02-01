@@ -2,6 +2,8 @@
 
 Une application web statique intuitive pour suivre et gérer vos jours de congés annuels, RTT et autres absences.
 
+Utilisable directement via GitHub pages: [Suivi Congés](https://julien-paoletti.github.io/suivi-conges/)
+
 ## ✨ Fonctionnalités
 
 ### 🎯 Gestion des congés
