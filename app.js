@@ -316,6 +316,16 @@ function createMonthCalendar(year, month, joursFeries, vacances) {
         dayCounter++;
     }
 
+    // Ajouter les cellules vides pour compléter la dernière semaine
+    const remainingCells = dayCounter % 7;
+    if (remainingCells > 0) {
+        for (let i = remainingCells; i < 7; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'day-cell empty';
+            grid.appendChild(emptyCell);
+        }
+    }
+
     monthDiv.appendChild(grid);
     return monthDiv;
 }
